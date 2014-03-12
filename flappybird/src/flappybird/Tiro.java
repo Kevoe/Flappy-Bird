@@ -223,6 +223,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          
          if (click) { // si click es true hara movimiento parabolico
              pika.setVelY(15);
+             click=false;
          } else{
          }
          pika.setPosY(pika.getPosY() - pika.getVelY());
@@ -434,6 +435,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+        click=true;
 //        click = true;
         //verifica que el click haya sido dentro del objeto caballo
 //        if (pika.clickDentro(e.getX(), e.getY())) {
@@ -468,7 +470,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mousePressed(MouseEvent e) {
-                click = true;
+                //click = true;
 
     }
 
