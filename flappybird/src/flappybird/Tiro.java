@@ -61,6 +61,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private int velX,velY;
         private int posOriginalX;
         private int posOriginalY;
+        private int random;
         
 	private Bueno pokebar[];    // Objeto de la clase Elefante
 	
@@ -244,10 +245,13 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      * con las orillas del <code>JFrame</code> y entre sí.
      */
     public void checaColision() {
-        //Verifica que la pokebar no choque con el applet por la derecha
+        //Verifica que la pokebar no choque con el applet por la izq
         if (pokebar[0].getPosX() + pokebar[0].getAncho() < 0) {
             pokebar[0].setPosX(getWidth() );
             pokebar[1].setPosX(getWidth() );
+            random = (int) (Math.random() * 200 + 50);
+            pokebar[0].setPosY(getHeight() - random);
+            pokebar[1].setPosY(0 - random + 100);            
         }
         
         
