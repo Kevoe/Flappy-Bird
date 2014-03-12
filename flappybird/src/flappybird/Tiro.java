@@ -34,6 +34,7 @@ import java.lang.Math;
 public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 {
 	private static final long serialVersionUID = 1L;
+        private Vector vec;    // Objeto vector para agregar el puntaje.
 	// Se declaran las variables.
 	private int direccion;    // Direccion del elefante
 	private int vidas;    // vidas del elefante
@@ -91,6 +92,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         start();
     }
         public void init() {
+        vec = new Vector();
         direccion = 0; //inicia estático
         click = false; //inicia sin click
         score=0;
@@ -202,10 +204,24 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             catch (InterruptedException ex) {
                 System.out.println("Error en " + ex.toString());
             }
-        } empieza=false; reinicio=true; if(vidas==0){
-            perdio=true;
-            
         }
+        empieza=false; 
+        reinicio=true; if(vidas==0){
+            perdio=true;
+        }
+        String nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+           JOptionPane.showMessageDialog(null, "El puntaje de " + nombre + " es: " + score, "PUNTAJE", JOptionPane.PLAIN_MESSAGE);
+                try {
+                      leeArchivo();    //lee el contenido del archivo
+                      //Agrega el contenido del nuevo puntaje al vector.
+                      vec.add(new Puntaje(nombre,score));
+                      //Graba el vector en el archivo.
+                      grabaArchivo();
+                } catch(IOException e) {
+
+                      System.out.println("Error en " + e.toString());
+                } 
+        
     }
     
     /**
@@ -350,68 +366,41 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         }
     }
     
-    public void leeArchivo() throws IOException {
-        BufferedReader fileIn;
+public void leeArchivo() throws IOException {
+                                                          
+                BufferedReader fileIn;
                 try {
-                    fileIn = new BufferedReader(new FileReader(nombreArchivo));
+                        fileIn = new BufferedReader(new FileReader(nombreArchivo));
                 } catch (FileNotFoundException e){
-                    File puntos = new File(nombreArchivo);
-                    PrintWriter fileOut = new PrintWriter(puntos);
-                    fileOut.println("512,0,512,100,0,0");
-                    fileOut.close();
-                    fileIn = new BufferedReader(new FileReader(nombreArchivo));
+                        File puntos = new File(nombreArchivo);
+                        PrintWriter fileOut = new PrintWriter(puntos);
+                        fileOut.println("100,demo");
+                        fileOut.close();
+                        fileIn = new BufferedReader(new FileReader(nombreArchivo));
                 }
                 String dato = fileIn.readLine();
-                while(dato != null) {
-                    
+                while(dato != null) {  
+                                                        
                       arr = dato.split(",");
-                      pokebar[0].setPosX(Integer.parseInt(arr[0])); //pos x de pokebar
-                      pokebar[0].setPosY(Integer.parseInt(arr[1])); // pos y de pokebar
-                      pika.setPosX(Integer.parseInt(arr[2])); // pos x de pika
-                      pika.setPosY(Integer.parseInt(arr[3])); // posy de pika
-                      pika.setVelX(Integer.parseInt(arr[4])); //vel de pika en x
-                      pika.setVelY(Integer.parseInt(arr[5]));// vel de pika en y
-                      vidas = (Integer.parseInt(arr[6])); // vidas
-                      puntaje = (Integer.parseInt(arr[7])); //score actual
-                      perdidos = (Integer.parseInt(arr[8])); //perdidos acomulados
-                      if ((Integer.parseInt(arr[9])) == 1) { //checar respectivas booleanas
-                          click = true;
-                      }
-                      else {
-                          click = false;
-                      }
-                      if ((Integer.parseInt(arr[10])) == 1) {
-                          sonidillo = true;
-                      }
-                      else {
-                          sonidillo = false;
-                      }
-                      
+                      int num = (Integer.parseInt(arr[0]));
+                      String nom = arr[1];
+                      vec.add(new Puntaje(nom,num));
                       dato = fileIn.readLine();
                 }
                 fileIn.close();
         }
     public void grabaArchivo() throws IOException {
-            PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
-            String graba; //graba el archivo de (pokebarposx,pokebarposy,pikaposx,pikaposy,velocidadx,veloidady,vidas, score , choque,click,sonidillo)
-            graba = Integer.toString(pokebar[0].getPosX()) + "," + Integer.toString(pokebar[0].getPosY()) + "," + Integer.toString(pika.getPosX()) + "," + Integer.toString(pika.getPosY()) + "," + Integer.toString(pika.getVelX()) + "," + Integer.toString(pika.getVelY()) + "," + Integer.toString(vidas)+ "," + Integer.toString(puntaje) + "," + Integer.toString(perdidos);
-            if (click) {
-                graba += ",1";
-            }
-            else {
-                graba += ",0";
-            }
-            
-            if (sonidillo) {
-                graba += ",1";
-            }
-            else {
-                graba += ",0";
-            }
-            fileOut.println(graba);
-            fileOut.close();
-    }
-    
+                                                          
+                PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+                for (int i = 0; i < vec.size(); i++) {
+
+                    Puntaje x;
+                    x = (Puntaje) vec.get(i);
+                    fileOut.println(x.toString());
+                }
+                fileOut.close();
+        }
+ 
     /**
      * Método <I>keyPressed<I/> de la clase <code>KeyListener</code>
      * @param e es el <code>evento</code> del teclado
