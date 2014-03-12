@@ -222,9 +222,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          }
          
          if (click) { // si click es true hara movimiento parabolico
-             pika.setPosY(pika.getPosY() - pika.getVelY());
-             pika.setVelY(pika.getVelY() - gravity);
+             pika.setVelY(15);
+         } else{
          }
+         pika.setPosY(pika.getPosY() - pika.getVelY());
+         pika.setVelY(pika.getVelY() - gravity);
          
          if (direccion == 1) { // velocidad de las barras entre menos vidas menor el movimiento
              barra.setPosX(barra.getPosX() - vidas - 2);
@@ -432,7 +434,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        click = true;
+//        click = true;
         //verifica que el click haya sido dentro del objeto caballo
 //        if (pika.clickDentro(e.getX(), e.getY())) {
 //            //cambia el estado de la variable click
@@ -466,7 +468,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        
+                click = true;
+
     }
 
     /**
@@ -475,7 +478,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+                click = false;
+
     }
     
     /**
