@@ -40,6 +40,10 @@ public class Bueno extends Base{
         incrementoScore = true;
     }
     
+        public void noIncrementarScore() {
+        incrementoScore = false;
+    }
+        
     public boolean haIncrementadoScore() {
         return incrementoScore;
     }

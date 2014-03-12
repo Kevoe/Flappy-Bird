@@ -220,6 +220,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          if(!pokebar[0].haIncrementadoScore() && pokebar[0].getPosX() + pokebar[0].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
                     pokebar[0].incrementarScore();
                     score++;
+                   
          }
          
          
@@ -258,7 +259,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             pokebar[1].setPosX(getWidth() );
             random = (int) (Math.random() * 200 + 50);
             pokebar[0].setPosY(getHeight() - random);
-            pokebar[1].setPosY(0 - random);            
+            pokebar[1].setPosY(0 - random);
+            pokebar[0].noIncrementarScore();
         }
         
         
