@@ -18,7 +18,7 @@ public class Flappybird {
     public static void main(String[] args) {
         Tiro juego= new Tiro();
         juego.setVisible(true);
-        juego.setTitle("Bananas Launch");
+        juego.setTitle("Flappy Pika ");
         // TODO code application logic here
     }
     

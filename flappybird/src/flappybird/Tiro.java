@@ -572,7 +572,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             }
             
             if (vidas <= 0) {
-                 g.drawString("Presiona R para iniciar ", getWidth() - 500, 100);
+                 g.drawString("FLAPPY PIKA!!! Presiona R para iniciar ", getWidth() - 500, 100);
+                 
                 //g.drawImage(creditos, 0, 0, getWidth(), getHeight() , this);
             }
         }
