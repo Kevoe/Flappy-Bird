@@ -62,7 +62,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private int posOriginalX;
         private int posOriginalY;
         
-	private Bueno barra;    // Objeto de la clase Elefante
+	private Bueno pokebar;    // Objeto de la clase Elefante
 	
 	private Malo pika;    //Objeto de la clase Raton
 	
@@ -94,8 +94,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         perdidos = 0;// cantidad de perdidos
         velX = (int)(0); // posiciones de velocidad x
         velY = (int)(10); //posiciones de velocidad y
-        posOriginalX = 100;
-        posOriginalY = 100;
+        posOriginalX = WIDTH/2;
+        posOriginalY = HEIGHT/2;
         setSize(1024, 640);  //se redimenciona el applet
         setBackground(Color.white);  //fondo blanco del applet
         addKeyListener(this);  //se añade el keyListener al applet
@@ -103,12 +103,12 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //cerrar aplicación al cerrar ventana
         
         //URL's de las imágenes de ambas animaciones y los sonidos
-        fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jungle.jpg"));
+        fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/flappyfondo.jpg"));
         pausaImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pause.png"));
         infoImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/info.png"));
         creditos = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Creditos.png"));
 
-        Image barra0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/barra.png"));
+        Image pokebar0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pokebar.png"));
 	
         Image pika0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_000.gif"));
 	Image pika1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_001.gif"));
@@ -121,23 +121,23 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
       
 //        explosion = new SoundClip("sounds/monkey.wav"); //sonido de explosion
 //        moneda = new SoundClip("sounds/money.wav");  //sonido de explosion
-//        fondoM = new SoundClip("sounds/jungle.wav");  //sonido de explosion
+//        fondoM = new SoundClip("sounds/flappyfondo.wav");  //sonido de explosion
         
         //Se crea un nuevo objeto bueno y se añaden los cuadros de animación
-        barra = new Bueno(getWidth() / 2, getHeight()-300 , barra0);
-        barra.sumaCuadro(barra0, 75);
+        pokebar = new Bueno(getWidth(), getHeight()-300 , pokebar0);
+        pokebar.sumaCuadro(pokebar0, 1000);
       
         // del objeto malo se crea la pika y se anima.
         pika = new Malo(posOriginalX, posOriginalY, pika0, velX, velY);
         
-        pika.sumaCuadro(pika0, 100);
-        pika.sumaCuadro(pika1, 100);
-        pika.sumaCuadro(pika2, 100);
-        pika.sumaCuadro(pika3, 100);
-        pika.sumaCuadro(pika4, 100);
-        pika.sumaCuadro(pika5, 100);
-        pika.sumaCuadro(pika6, 100);
-        pika.sumaCuadro(pika7, 100);         
+        pika.sumaCuadro(pika0, 20);
+        pika.sumaCuadro(pika1, 20);
+        pika.sumaCuadro(pika2, 20);
+        pika.sumaCuadro(pika3, 20);
+        pika.sumaCuadro(pika4, 20);
+        pika.sumaCuadro(pika5, 20);
+        pika.sumaCuadro(pika6, 20);
+        pika.sumaCuadro(pika7, 20);         
         }
         
          public void start() {
@@ -187,7 +187,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
     /**
     
       * Metodo <I>actualiza</I> sobrescrito de la clase 
-    * En este metodo se actualizan las posciciones de la barra
+    * En este metodo se actualizan las posciciones de la pokebar
     *  y de la pika. asi como actualizar las booleanas
     * 
     */
@@ -200,7 +200,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          
          //Actualiza la animación con base en el tiempo transcurrido
          if (direccion != 0) {
-             barra.actualiza(tiempoTranscurrido);
+             pokebar.actualiza(tiempoTranscurrido);
          }
          
          
@@ -226,16 +226,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
              click=false;
          } else{
          }
+         
+         
          pika.setPosY(pika.getPosY() - pika.getVelY());
          pika.setVelY(pika.getVelY() - gravity);
-         
-         if (direccion == 1) { // velocidad de las barras entre menos vidas menor el movimiento
-             barra.setPosX(barra.getPosX() - vidas - 2);
-         }
-         
-         else if (direccion == 2) {
-             barra.setPosX(barra.getPosX() + vidas + 2);
-         }
+         pokebar.setPosX(pokebar.getPosX() - 2);       
     }
     
     /**
@@ -243,18 +238,14 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      * con las orillas del <code>JFrame</code> y entre sí.
      */
     public void checaColision() {
-        //Verifica que la barra no choque con el applet por la derecha
-        if (barra.getPosX() + barra.getAncho() > getWidth()) {
-            barra.setPosX(getWidth() - barra.getAncho());
+        //Verifica que la pokebar no choque con el applet por la derecha
+        if (pokebar.getPosX() + pokebar.getAncho() > getWidth()) {
+            pokebar.setPosX(getWidth() - pokebar.getAncho());
         }
         
-        //Verifica que barra no choque con el applet por la izquierda
-        if (barra.getPosX() < getWidth() / 2) {
-            barra.setPosX(getWidth() / 2);
-        }
         
         //Verifica que cada objeto malo no choque con el caballo
-        if (barra.intersecta(pika)) {
+        if (pokebar.intersecta(pika)) {
             if (sonidillo) {
 //                moneda.play();  //reproducre sonidillo de choque corecto           
             }
@@ -306,8 +297,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
                 while(dato != null) {
                     
                       arr = dato.split(",");
-                      barra.setPosX(Integer.parseInt(arr[0])); //pos x de barra
-                      barra.setPosY(Integer.parseInt(arr[1])); // pos y de barra
+                      pokebar.setPosX(Integer.parseInt(arr[0])); //pos x de pokebar
+                      pokebar.setPosY(Integer.parseInt(arr[1])); // pos y de pokebar
                       pika.setPosX(Integer.parseInt(arr[2])); // pos x de pika
                       pika.setPosY(Integer.parseInt(arr[3])); // posy de pika
                       pika.setVelX(Integer.parseInt(arr[4])); //vel de pika en x
@@ -334,8 +325,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         }
     public void grabaArchivo() throws IOException {
             PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
-            String graba; //graba el archivo de (barraposx,barraposy,pikaposx,pikaposy,velocidadx,veloidady,vidas, score , choque,click,sonidillo)
-            graba = Integer.toString(barra.getPosX()) + "," + Integer.toString(barra.getPosY()) + "," + Integer.toString(pika.getPosX()) + "," + Integer.toString(pika.getPosY()) + "," + Integer.toString(pika.getVelX()) + "," + Integer.toString(pika.getVelY()) + "," + Integer.toString(vidas)+ "," + Integer.toString(puntaje) + "," + Integer.toString(perdidos);
+            String graba; //graba el archivo de (pokebarposx,pokebarposy,pikaposx,pikaposy,velocidadx,veloidady,vidas, score , choque,click,sonidillo)
+            graba = Integer.toString(pokebar.getPosX()) + "," + Integer.toString(pokebar.getPosY()) + "," + Integer.toString(pika.getPosX()) + "," + Integer.toString(pika.getPosY()) + "," + Integer.toString(pika.getVelX()) + "," + Integer.toString(pika.getVelY()) + "," + Integer.toString(vidas)+ "," + Integer.toString(puntaje) + "," + Integer.toString(perdidos);
             if (click) {
                 graba += ",1";
             }
@@ -516,7 +507,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
     public void paint1(Graphics g) {
         g.setColor(Color.white);
         //Verifica que los objetos existan
-        if (barra != null && pika != null ) { 
+        if (pokebar != null && pika != null ) { 
             
             if (info) {
                 g.drawImage(infoImagen, 0, 0, getWidth(), getHeight(), this);
@@ -527,7 +518,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
                 g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 
                 // Dibuja el caballo
-                g.drawImage(barra.getImagen(), barra.getPosX(), barra.getPosY(), this);
+                g.drawImage(pokebar.getImagen(), pokebar.getPosX(), pokebar.getPosY(), this);
                 //Dibuja los objetos malos
                 g.drawImage(pika.getImagen(), pika.getPosX(), pika.getPosY(), this);
                 //Verifica que haya desaparecido un objeto malo y dibuja el mensaje desaparece
