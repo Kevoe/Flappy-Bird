@@ -16,6 +16,7 @@ public class Bueno extends Base{
     
     private final static String DESAPARECE="DESAPARECE";
     private final static String PAUSA="PAUSA";
+    private boolean incrementoScore;
     
 
 	/**
@@ -35,4 +36,11 @@ public class Bueno extends Base{
             return PAUSA;
         }
         
+        public void incrementarScore() {
+        incrementoScore = true;
+    }
+    
+    public boolean haIncrementadoScore() {
+        return incrementoScore;
+    }
 }

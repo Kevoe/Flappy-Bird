@@ -44,6 +44,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 	private static final int HEIGHT = 640;    //Alto del JFrame
 	private Image fondo;
         private boolean info;
+        private int score;
         private Image pausaImagen;
         private Image infoImagen;
         private Image creditos;
@@ -233,7 +234,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          } else{
          }
          
-         
+         if(!pokebar.haIncrementadoScore() && pokebar.getPosX() + pokebar.getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
+                    pokebar.incrementarScore();
+                    score++;
+         }
          pika.setPosY(pika.getPosY() - pika.getVelY());
          pika.setVelY(pika.getVelY() - gravity);
          pokebar[0].setPosX(pokebar[0].getPosX() - 2);
@@ -536,6 +540,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
                 g.drawImage(pika.getImagen(), pika.getPosX(), pika.getPosY(), this);
                 //Verifica que haya desaparecido un objeto malo y dibuja el mensaje desaparece
                 g.drawString("Vidas: " + vidas + "   Puntos: " + puntaje, getWidth() - 200, 50);
+                g.drawString(String.valueOf(score), getWidth()/2 - 20, getHeight()/3);
                 if (pausa) {
                      //Dibuja el mensaje de pausado
                     g.drawImage(pausaImagen, getWidth() / 2 - 202, getHeight() / 2 - 197, 405, 392, this);
