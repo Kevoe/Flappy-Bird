@@ -423,6 +423,12 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             direccion = 2;
         }
+        
+        else if (e.getKeyCode() == KeyEvent.VK_R){
+        Tiro juego= new Tiro();
+        juego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	juego.setVisible(true);
+       }
     }
     
     /**
@@ -566,7 +572,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             }
             
             if (vidas <= 0) {
-                g.drawImage(creditos, 0, 0, getWidth(), getHeight() , this);
+                 g.drawString("Presiona R para iniciar ", getWidth() - 500, 100);
+                //g.drawImage(creditos, 0, 0, getWidth(), getHeight() , this);
             }
         }
         
