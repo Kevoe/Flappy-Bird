@@ -55,9 +55,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private Image pokebar0, pika0, pika1,pika2,pika3,pika4,pika5,pika6,pika7;
 	private Graphics dbg;	// Objeto grafico
 
-//	private SoundClip explosion; //sonido explosion
-//        private SoundClip moneda; //sonido explosion
-//        private SoundClip fondoM;
+        private SoundClip explosion; 
+        private SoundClip moneda; 
+        //private SoundClip fondoM;
+        private SoundClip wing;
 	private int gravity;
         private boolean semueve;
         private int perdidos;
@@ -127,8 +128,9 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         pika6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_006.gif"));
         pika7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_007.gif"));
       
-//        explosion = new SoundClip("sounds/monkey.wav"); //sonido de explosion
-//        moneda = new SoundClip("sounds/money.wav");  //sonido de explosion
+        explosion = new SoundClip("sounds/sfx_hit.wav"); //sonido de explosion
+        moneda = new SoundClip("sounds/sfx_point.wav");  //sonido de explosion
+        wing=new SoundClip("sounds/sfx_wing.wav");
 //        fondoM = new SoundClip("sounds/flappyfondo.wav");  //sonido de explosion
         
         //Se crea un nuevo objeto bueno y se añaden los cuadros de animación
@@ -230,11 +232,13 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          if(!pokebar[0].haIncrementadoScore() && pokebar[0].getPosX() + pokebar[0].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
                     pokebar[0].incrementarScore();
                     score++;
+                    moneda.play();
                    
          }
          if(!pokebar[0].haIncrementadoScore() && pokebar[2].getPosX() + pokebar[2].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
                     pokebar[0].incrementarScore();
                     score++;
+                    moneda.play();
          }
          
          
@@ -302,7 +306,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         //Verifica que cada objeto malo no choque con el caballo
         if (pokebar[0].intersecta(pika) || pokebar[1].intersecta(pika) || pokebar[2].intersecta(pika) || pokebar[3].intersecta(pika) ) {
             if (sonidillo) {
-//                moneda.play();  //reproducre sonidillo de choque corecto           
+                explosion.play();  //reproducre sonidillo de choque corecto           
             }
             pika.setContador(pika.getContador() + 1);
             pika.setPosX(posOriginalX);// pone la espera en la posicion original
@@ -317,7 +321,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         //Verifica que cada objeto malo choque con el applet
         if (pika.getPosY() + pika.getAlto() > getHeight()) {
             if (sonidillo) {
-//                explosion.play();  //reproducre sonidillo de bala           
+                explosion.play();  //reproducre sonidillo de bala           
             }
 //            velX = (int)(Math.random() * 5 + 13);
 //            velY = (int)(Math.random() * 12 + 15);
@@ -549,6 +553,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
     @Override
     public void mousePressed(MouseEvent e) {
                 click = true;
+                wing.play();
 
     }
 
