@@ -131,12 +131,15 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 //        fondoM = new SoundClip("sounds/flappyfondo.wav");  //sonido de explosion
         
         //Se crea un nuevo objeto bueno y se añaden los cuadros de animación
-        pokebar = new Bueno[2];
+        pokebar = new Bueno[4];
         pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
         pokebar[1] = new Bueno(getWidth(), 0 - 250 , pokebar0);
+        pokebar[2] = new Bueno(3* getWidth()/2, getHeight()-300 , pokebar0);
+        pokebar[3] = new Bueno(3* getWidth()/2, 0 - 250 , pokebar0);
         pokebar[0].sumaCuadro(pokebar0, 1000);
         pokebar[1].sumaCuadro(pokebar0, 1000);
-
+        pokebar[2].sumaCuadro(pokebar0, 1000);
+        pokebar[3].sumaCuadro(pokebar0, 1000);
       
         // del objeto malo se crea la pika y se anima.
         pika = new Malo(posOriginalX, posOriginalY, pika0, velX, velY);
@@ -213,6 +216,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          if (direccion != 0) {
              pokebar[0].actualiza(tiempoTranscurrido);
              pokebar[1].actualiza(tiempoTranscurrido);
+             pokebar[2].actualiza(tiempoTranscurrido);
+             pokebar[3].actualiza(tiempoTranscurrido);
              
          }
          
@@ -226,7 +231,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
                     score++;
                    
          }
-         
+         if(!pokebar[0].haIncrementadoScore() && pokebar[2].getPosX() + pokebar[2].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
+                    pokebar[0].incrementarScore();
+                    score++;
+         }
          
          
          //Actualiza la posición de cada malo con base en su velocidad
@@ -259,6 +267,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          pika.setVelY(pika.getVelY() - gravity);
          pokebar[0].setPosX(pokebar[0].getPosX() - 4*nivel);
          pokebar[1].setPosX(pokebar[1].getPosX() - 4*nivel);
+         pokebar[2].setPosX(pokebar[2].getPosX() - 4*nivel);
+         pokebar[3].setPosX(pokebar[3].getPosX() - 4*nivel);
          
          
     }
@@ -278,9 +288,18 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             pokebar[0].noIncrementarScore();
         }
         
+        if (pokebar[2].getPosX() + pokebar[0].getAncho() < 0) {
+            pokebar[2].setPosX(getWidth() );
+            pokebar[3].setPosX(getWidth() );
+            random = (int) (Math.random() * 200 + 50);
+            pokebar[2].setPosY(getHeight() - random);
+            pokebar[3].setPosY(0 - random + 50);
+            pokebar[0].noIncrementarScore();
+        }
+        
         
         //Verifica que cada objeto malo no choque con el caballo
-        if (pokebar[0].intersecta(pika) || pokebar[1].intersecta(pika) ) {
+        if (pokebar[0].intersecta(pika) || pokebar[1].intersecta(pika) || pokebar[2].intersecta(pika) || pokebar[3].intersecta(pika) ) {
             if (sonidillo) {
 //                moneda.play();  //reproducre sonidillo de choque corecto           
             }
@@ -427,11 +446,17 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         }
         
         else if (e.getKeyCode() == KeyEvent.VK_R){
-        pokebar = new Bueno[2];
+        pokebar = new Bueno[4];
         pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
         pokebar[1] = new Bueno(getWidth(), 0 - 250 , pokebar0);
         pokebar[0].sumaCuadro(pokebar0, 1000);
         pokebar[1].sumaCuadro(pokebar0, 1000);
+        
+        pokebar[2] = new Bueno(3* getWidth()/ 2, getHeight()-300 , pokebar0);
+        pokebar[3] = new Bueno(3* getWidth()/ 2, 0 - 250 , pokebar0);
+        pokebar[2].sumaCuadro(pokebar0, 1000);
+        pokebar[3].sumaCuadro(pokebar0, 1000);
+        
         vidas=1;
         score=0;
         nivel=1;
@@ -578,9 +603,12 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 
                 g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 
-                // Dibuja el caballo
+                // Dibuja la barra
                 g.drawImage(pokebar[0].getImagen(), pokebar[0].getPosX(), pokebar[0].getPosY(), this);
                 g.drawImage(pokebar[1].getImagen(), pokebar[1].getPosX(), pokebar[1].getPosY(), this);
+                g.drawImage(pokebar[2].getImagen(), pokebar[2].getPosX(), pokebar[2].getPosY(), this);
+                g.drawImage(pokebar[3].getImagen(), pokebar[3].getPosX(), pokebar[3].getPosY(), this);
+                
                 
                 //Dibuja los objetos malos
                 g.drawImage(pika.getImagen(), pika.getPosX(), pika.getPosY(), this);
