@@ -59,6 +59,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private int i;
         private int vel;
         private int velX,velY;
+        private int posOriginalX;
+        private int posOriginalY;
         
 	private Bueno barra;    // Objeto de la clase Elefante
 	
@@ -90,8 +92,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         semueve = true; //booleana para ver si ya empezo a moverse
         info = false; //booleana para desplegar instrucciones
         perdidos = 0;// cantidad de perdidos
-        velX = (int)(Math.random() * 5 + 13); // posiciones de velocidad x
-        velY = (int)(Math.random() * 12 + 15); //posiciones de velocidad y
+        velX = (int)(0); // posiciones de velocidad x
+        velY = (int)(10); //posiciones de velocidad y
+        posOriginalX = 100;
+        posOriginalY = 100;
         setSize(1024, 640);  //se redimenciona el applet
         setBackground(Color.white);  //fondo blanco del applet
         addKeyListener(this);  //se añade el keyListener al applet
@@ -124,7 +128,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         barra.sumaCuadro(barra0, 75);
       
         // del objeto malo se crea la pika y se anima.
-        pika = new Malo(50, getHeight() - 100, pika0, velX, velY);
+        pika = new Malo(posOriginalX, posOriginalY, pika0, velX, velY);
         
         pika.sumaCuadro(pika0, 100);
         pika.sumaCuadro(pika1, 100);
@@ -201,9 +205,9 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          
          
          //Actualiza la animación con base en el tiempo transcurrido para cada malo
-         if (click) {
+//         if (click) {
              pika.actualiza(tiempoTranscurrido);
-         }
+//         }
          
          
          
@@ -213,12 +217,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          
          
          
-         if (pika.getPosX() != 50 || pika.getPosY() != getHeight() - 100) {
+         if (pika.getPosX() != posOriginalX || pika.getPosY() != posOriginalY) {
              semueve = false;
          }
          
          if (click) { // si click es true hara movimiento parabolico
-             pika.setPosX(pika.getPosX() + pika.getVelX());
              pika.setPosY(pika.getPosY() - pika.getVelY());
              pika.setVelY(pika.getVelY() - gravity);
          }
@@ -255,8 +258,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             velX = (int)(Math.random() * 5 + 13); //genera nueva velocidad x
             velY = (int)(Math.random() * 12 + 15); // genera nueva veolicdad y
             pika.setContador(pika.getContador() + 1);
-            pika.setPosX(50);// pone la espera en la posicion original
-            pika.setPosY(getHeight() - 100); // pone la pika en la posicion original
+            pika.setPosX(posOriginalX);// pone la espera en la posicion original
+            pika.setPosY(posOriginalY); // pone la pika en la posicion original
             pika.setVelY(velY);//valor de velocidad
             puntaje += 2; // aumenta el score si intersecta
             click = false;
@@ -268,10 +271,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             if (sonidillo) {
 //                explosion.play();  //reproducre sonidillo de bala           
             }
-            velX = (int)(Math.random() * 5 + 13);
-            velY = (int)(Math.random() * 12 + 15);
-            pika.setPosX(50);
-            pika.setPosY(getHeight() - 100);
+//            velX = (int)(Math.random() * 5 + 13);
+//            velY = (int)(Math.random() * 12 + 15);
+            pika.setPosX(posOriginalX);
+            pika.setPosY(posOriginalY);
             pika.setVelY(velY);
             perdidos++;
             click = false;
@@ -429,13 +432,14 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+        click = true;
         //verifica que el click haya sido dentro del objeto caballo
-        if (pika.clickDentro(e.getX(), e.getY())) {
-            //cambia el estado de la variable click
-            if (semueve) {
-                click = true;
-            }
-        }
+//        if (pika.clickDentro(e.getX(), e.getY())) {
+//            //cambia el estado de la variable click
+//            if (semueve) {
+//                click = true;
+//            }
+//        }
     }
     
     /**
@@ -541,4 +545,3 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         
     
 }
-
