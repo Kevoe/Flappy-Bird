@@ -51,7 +51,9 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private Image creditos;
         private Image dbImage;	// Imagen a proyectar
 	private Image gameover;	// Imagen al finalizar el juego.
+        private Image pokebar0, pika0, pika1,pika2,pika3,pika4,pika5,pika6,pika7;
 	private Graphics dbg;	// Objeto grafico
+
 //	private SoundClip explosion; //sonido explosion
 //        private SoundClip moneda; //sonido explosion
 //        private SoundClip fondoM;
@@ -89,7 +91,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         score=0;
         nivel=1;
         pausa = false;  //se inicia sin pausa
-        vidas = 1; // cantidad inicial de vidas
+        vidas = 0; // cantidad inicial de vidas
         puntaje = 0; // socre inicial
         nombreArchivo = "puntajes.txt"; // nombre del archivo a modificar donde se guardara la informacion del juego
         sonidillo = true; // boooleana apra prender sonido
@@ -113,16 +115,16 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         infoImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/info.png"));
         creditos = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Creditos.png"));
 
-        Image pokebar0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pokebar.png"));
+        pokebar0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pokebar.png"));
 	
-        Image pika0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_000.gif"));
-	Image pika1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_001.gif"));
-        Image pika2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_002.gif"));
-        Image pika3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_003.gif"));
-        Image pika4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_004.gif"));
-        Image pika5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_005.gif"));
-        Image pika6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_006.gif"));
-        Image pika7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_007.gif"));
+        pika0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_000.gif"));
+	pika1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_001.gif"));
+        pika2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_002.gif"));
+        pika3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_003.gif"));
+        pika4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_004.gif"));
+        pika5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_005.gif"));
+        pika6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_006.gif"));
+        pika7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_007.gif"));
       
 //        explosion = new SoundClip("sounds/monkey.wav"); //sonido de explosion
 //        moneda = new SoundClip("sounds/money.wav");  //sonido de explosion
@@ -425,9 +427,29 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         }
         
         else if (e.getKeyCode() == KeyEvent.VK_R){
-        Tiro juego= new Tiro();
-        juego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	juego.setVisible(true);
+        pokebar = new Bueno[2];
+        pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
+        pokebar[1] = new Bueno(getWidth(), 0 - 200 , pokebar0);
+        pokebar[0].sumaCuadro(pokebar0, 1000);
+        pokebar[1].sumaCuadro(pokebar0, 1000);
+        vidas=1;
+        score=0;
+        nivel=1;
+
+        // del objeto malo se crea la pika y se anima.
+        pika = new Malo(posOriginalX, posOriginalY, pika0, velX, velY);
+        pika.sumaCuadro(pika0, 20);
+        pika.sumaCuadro(pika1, 20);
+        pika.sumaCuadro(pika2, 20);
+        pika.sumaCuadro(pika3, 20);
+        pika.sumaCuadro(pika4, 20);
+        pika.sumaCuadro(pika5, 20);
+        pika.sumaCuadro(pika6, 20);
+        pika.sumaCuadro(pika7, 20);
+        
+        start();
+        
+        
        }
     }
     
@@ -510,7 +532,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-                click = false;
+    //            click = false;
 
     }
     
