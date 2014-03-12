@@ -89,7 +89,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         score=0;
         nivel=1;
         pausa = false;  //se inicia sin pausa
-        vidas = 5; // cantidad inicial de vidas
+        vidas = 1; // cantidad inicial de vidas
         puntaje = 0; // socre inicial
         nombreArchivo = "puntajes.txt"; // nombre del archivo a modificar donde se guardara la informacion del juego
         sonidillo = true; // boooleana apra prender sonido
@@ -272,7 +272,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             pokebar[1].setPosX(getWidth() );
             random = (int) (Math.random() * 200 + 50);
             pokebar[0].setPosY(getHeight() - random);
-            pokebar[1].setPosY(0 - random);
+            pokebar[1].setPosY(0 - random + 100);
             pokebar[0].noIncrementarScore();
         }
         
@@ -282,15 +282,14 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             if (sonidillo) {
 //                moneda.play();  //reproducre sonidillo de choque corecto           
             }
-            velX = (int)(Math.random() * 5 + 13); //genera nueva velocidad x
-            velY = (int)(Math.random() * 12 + 15); // genera nueva veolicdad y
             pika.setContador(pika.getContador() + 1);
             pika.setPosX(posOriginalX);// pone la espera en la posicion original
             pika.setPosY(posOriginalY); // pone la pika en la posicion original
             pika.setVelY(velY);//valor de velocidad
-            puntaje += 2; // aumenta el score si intersecta
+//            puntaje += 2; // aumenta el score si intersecta
             click = false;
             semueve = true;
+            vidas--;
         }
         
         //Verifica que cada objeto malo choque con el applet
@@ -306,6 +305,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             perdidos++;
             click = false;
             semueve = true;
+            vidas--;
 
         }
         
