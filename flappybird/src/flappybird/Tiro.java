@@ -103,7 +103,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //cerrar aplicación al cerrar ventana
         
         //URL's de las imágenes de ambas animaciones y los sonidos
-        fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/jungle.jpg"));
+        fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/flappyfondo.jpg"));
         pausaImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pause.png"));
         infoImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/info.png"));
         creditos = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Creditos.png"));
@@ -121,7 +121,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
       
 //        explosion = new SoundClip("sounds/monkey.wav"); //sonido de explosion
 //        moneda = new SoundClip("sounds/money.wav");  //sonido de explosion
-//        fondoM = new SoundClip("sounds/jungle.wav");  //sonido de explosion
+//        fondoM = new SoundClip("sounds/flappyfondo.wav");  //sonido de explosion
         
         //Se crea un nuevo objeto bueno y se añaden los cuadros de animación
         barra = new Bueno(getWidth(), getHeight()-300 , barra0);
