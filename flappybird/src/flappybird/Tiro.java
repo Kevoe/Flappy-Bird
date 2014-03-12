@@ -45,6 +45,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 	private Image fondo;
         private boolean info;
         private int score;
+        private int nivel;
         private Image pausaImagen;
         private Image infoImagen;
         private Image creditos;
@@ -86,6 +87,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         direccion = 0; //inicia estático
         click = false; //inicia sin click
         score=0;
+        nivel=1;
         pausa = false;  //se inicia sin pausa
         vidas = 5; // cantidad inicial de vidas
         puntaje = 0; // socre inicial
@@ -240,12 +242,23 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          } else{
          }
          
-        
+        if(score==3){
+             nivel=2;
+         }
+         if(score==20){
+             nivel=3;
+             
+         }
+         if(score==100){
+             nivel=4;
+         }
          
          pika.setPosY(pika.getPosY() - pika.getVelY());
          pika.setVelY(pika.getVelY() - gravity);
-         pokebar[0].setPosX(pokebar[0].getPosX() - 2);
-         pokebar[1].setPosX(pokebar[1].getPosX() - 2);
+         pokebar[0].setPosX(pokebar[0].getPosX() - 4*nivel);
+         pokebar[1].setPosX(pokebar[1].getPosX() - 4*nivel);
+         
+         
     }
     
     /**
@@ -544,7 +557,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
                 //Dibuja los objetos malos
                 g.drawImage(pika.getImagen(), pika.getPosX(), pika.getPosY(), this);
                 //Verifica que haya desaparecido un objeto malo y dibuja el mensaje desaparece
-                g.drawString("Vidas: " + vidas + "   Puntos: " + puntaje, getWidth() - 200, 50);
+                g.drawString("Nivel: " + nivel, getWidth() - 200, 50);
                 g.drawString(String.valueOf(score), getWidth()/2 - 20, getHeight()/3);
                 if (pausa) {
                      //Dibuja el mensaje de pausado
