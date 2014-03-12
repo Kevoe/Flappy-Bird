@@ -46,6 +46,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private boolean info;
         private int score;
         private int nivel;
+        private boolean empieza=false;
         private Image pausaImagen;
         private Image inicio;
         private Image infoImagen;
@@ -198,7 +199,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             catch (InterruptedException ex) {
                 System.out.println("Error en " + ex.toString());
             }
-        }
+        } empieza=false;
     }
     
     /**
@@ -210,6 +211,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
     */
     public void actualiza() {
          //Determina el tiempo que ha transcurrido desde que el Applet inicio su ejecución
+        if(empieza==true){
          long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
          
          //Guarda el tiempo actual
@@ -257,16 +259,17 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          } else{
          }
          
-        if(score==3){
+        if(score==10){
              nivel=2;
          }
          if(score==20){
              nivel=3;
              
          }
-         if(score==100){
+         if(score==30){
              nivel=4;
          }
+         
          
          pika.setPosY(pika.getPosY() - pika.getVelY());
          pika.setVelY(pika.getVelY() - gravity);
@@ -275,7 +278,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          pokebar[2].setPosX(pokebar[2].getPosX() - 4*nivel);
          pokebar[3].setPosX(pokebar[3].getPosX() - 4*nivel);
          
-         
+        }
     }
     
     /**
@@ -416,6 +419,14 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             pausa = !pausa;
         }
         
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            //Se cambia el estado de la variable pausa dependiendo de su
+            //valor actual y desaparece el letrero de desaparece
+            empieza=true;
+            click = true;
+            wing.play();
+        }
+        
         if (e.getKeyCode() == KeyEvent.VK_I) {
             //Se cambia el estado de la variable pausa dependiendo de su
             //valor actual y desaparece el letrero de desaparece
@@ -552,6 +563,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        empieza=true;
                 click = true;
                 wing.play();
 
