@@ -133,7 +133,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         //Se crea un nuevo objeto bueno y se añaden los cuadros de animación
         pokebar = new Bueno[2];
         pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
-        pokebar[1] = new Bueno(getWidth(), 0 - 200 , pokebar0);
+        pokebar[1] = new Bueno(getWidth(), 0 - 250 , pokebar0);
         pokebar[0].sumaCuadro(pokebar0, 1000);
         pokebar[1].sumaCuadro(pokebar0, 1000);
 
@@ -274,7 +274,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             pokebar[1].setPosX(getWidth() );
             random = (int) (Math.random() * 200 + 50);
             pokebar[0].setPosY(getHeight() - random);
-            pokebar[1].setPosY(0 - random + 100);
+            pokebar[1].setPosY(0 - random + 50);
             pokebar[0].noIncrementarScore();
         }
         
@@ -429,7 +429,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         else if (e.getKeyCode() == KeyEvent.VK_R){
         pokebar = new Bueno[2];
         pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
-        pokebar[1] = new Bueno(getWidth(), 0 - 200 , pokebar0);
+        pokebar[1] = new Bueno(getWidth(), 0 - 250 , pokebar0);
         pokebar[0].sumaCuadro(pokebar0, 1000);
         pokebar[1].sumaCuadro(pokebar0, 1000);
         vidas=1;
@@ -487,7 +487,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        click=true;
+//        click=true;
 //        click = true;
         //verifica que el click haya sido dentro del objeto caballo
 //        if (pika.clickDentro(e.getX(), e.getY())) {
@@ -522,7 +522,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
      */
     @Override
     public void mousePressed(MouseEvent e) {
-                //click = true;
+                click = true;
 
     }
 
