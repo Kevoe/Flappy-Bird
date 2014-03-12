@@ -209,10 +209,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          if (direccion != 0) {
              pokebar[0].actualiza(tiempoTranscurrido);
              pokebar[1].actualiza(tiempoTranscurrido);
-             if(!pokebar[0].haIncrementadoScore() && pokebar[0].getPosX() + pokebar[0].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
-                    pokebar[0].incrementarScore();
-                    score++;
-         }
+             
          }
          
          
@@ -220,7 +217,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 //         if (click) {
              pika.actualiza(tiempoTranscurrido);
 //         }
-         
+         if(!pokebar[0].haIncrementadoScore() && pokebar[0].getPosX() + pokebar[0].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
+                    pokebar[0].incrementarScore();
+                    score++;
+         }
          
          
          
@@ -239,11 +239,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          } else{
          }
          
-         if(!pokebar[0].haIncrementadoScore() && pokebar[0].getPosX() + pokebar[0].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
-                    pokebar[0].incrementarScore();
-                    score++;
-         }
-         
+        
          
          pika.setPosY(pika.getPosY() - pika.getVelY());
          pika.setVelY(pika.getVelY() - gravity);
