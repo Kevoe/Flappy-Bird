@@ -43,9 +43,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 	private static final int WIDTH = 800;    //Ancho del JFrame
 	private static final int HEIGHT = 640;    //Alto del JFrame
 	private Image fondo;
+        private boolean reinicio=false;
         private boolean info;
         private int score;
         private int nivel;
+        private boolean perdio=false;
         private boolean empieza=false;
         private Image pausaImagen;
         private Image inicio;
@@ -94,7 +96,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         score=0;
         nivel=1;
         pausa = false;  //se inicia sin pausa
-        vidas = 0; // cantidad inicial de vidas
+        vidas = 1; // cantidad inicial de vidas
         puntaje = 0; // socre inicial
         nombreArchivo = "puntajes.txt"; // nombre del archivo a modificar donde se guardara la informacion del juego
         sonidillo = true; // boooleana apra prender sonido
@@ -170,6 +172,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         tiempoActual = System.currentTimeMillis();
         
         while (vidas > 0) {
+            perdio=false;
             
 //            if (sonidillo) {
 //                if (!fondoM.getLooping()) {
@@ -199,7 +202,10 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             catch (InterruptedException ex) {
                 System.out.println("Error en " + ex.toString());
             }
-        } empieza=false;
+        } empieza=false; reinicio=true; if(vidas==0){
+            perdio=true;
+            
+        }
     }
     
     /**
@@ -461,7 +467,9 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             direccion = 2;
         }
         
-        else if (e.getKeyCode() == KeyEvent.VK_R){
+        else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+            if(reinicio==true){
+                reinicio=false;
         pokebar = new Bueno[4];
         pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
         pokebar[1] = new Bueno(getWidth(), 0 - 250 , pokebar0);
@@ -492,6 +500,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         
         
        }
+        }
     }
     
     /**
@@ -566,6 +575,38 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         empieza=true;
                 click = true;
                 wing.play();
+                if(reinicio==true){
+                reinicio=false;
+        pokebar = new Bueno[4];
+        pokebar[0] = new Bueno(getWidth(), getHeight()-300 , pokebar0);
+        pokebar[1] = new Bueno(getWidth(), 0 - 250 , pokebar0);
+        pokebar[0].sumaCuadro(pokebar0, 1000);
+        pokebar[1].sumaCuadro(pokebar0, 1000);
+        
+        pokebar[2] = new Bueno(3* getWidth()/ 2, getHeight()-300 , pokebar0);
+        pokebar[3] = new Bueno(3* getWidth()/ 2, 0 - 250 , pokebar0);
+        pokebar[2].sumaCuadro(pokebar0, 1000);
+        pokebar[3].sumaCuadro(pokebar0, 1000);
+        
+        vidas=1;
+        score=0;
+        nivel=1;
+
+        // del objeto malo se crea la pika y se anima.
+        pika = new Malo(posOriginalX, posOriginalY, pika0, velX, velY);
+        pika.sumaCuadro(pika0, 20);
+        pika.sumaCuadro(pika1, 20);
+        pika.sumaCuadro(pika2, 20);
+        pika.sumaCuadro(pika3, 20);
+        pika.sumaCuadro(pika4, 20);
+        pika.sumaCuadro(pika5, 20);
+        pika.sumaCuadro(pika6, 20);
+        pika.sumaCuadro(pika7, 20);
+        
+        start();
+        
+        
+       }
 
     }
 
@@ -639,9 +680,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
                 }  
             }
             
-            if (vidas <= 0) {
+            if(perdio){
+                 g.drawString("Volver a jugar ", getWidth() - 600, 80);}
+            if (!empieza) {
                  g.drawImage(inicio,300,100,400,73,this);
-                 g.drawString("Presiona R para iniciar ", getWidth() - 600, 80);
+                 
                  
                 //g.drawImage(creditos, 0, 0, getWidth(), getHeight() , this);
             }
