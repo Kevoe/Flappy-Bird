@@ -47,6 +47,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         private int score;
         private int nivel;
         private Image pausaImagen;
+        private Image inicio;
         private Image infoImagen;
         private Image creditos;
         private Image dbImage;	// Imagen a proyectar
@@ -110,11 +111,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //cerrar aplicación al cerrar ventana
         
         //URL's de las imágenes de ambas animaciones y los sonidos
-        fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/flappyfondo.jpg"));
-        pausaImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pause.png"));
+        fondo =     Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/flappyfondo.jpg"));
+        pausaImagen= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pause.png"));
         infoImagen = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/info.png"));
         creditos = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Creditos.png"));
-
+        inicio= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pikafondo.png"));
         pokebar0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pokebar.png"));
 	
         pika0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/frame_000.gif"));
@@ -622,7 +623,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             }
             
             if (vidas <= 0) {
-                 g.drawString("FLAPPY PIKA!!! Presiona R para iniciar ", getWidth() - 500, 100);
+                 g.drawImage(inicio,300,100,400,73,this);
+                 g.drawString("Presiona R para iniciar ", getWidth() - 600, 80);
                  
                 //g.drawImage(creditos, 0, 0, getWidth(), getHeight() , this);
             }
