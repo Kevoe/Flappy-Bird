@@ -94,8 +94,8 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         perdidos = 0;// cantidad de perdidos
         velX = (int)(0); // posiciones de velocidad x
         velY = (int)(10); //posiciones de velocidad y
-        posOriginalX = 100;
-        posOriginalY = 100;
+        posOriginalX = WIDTH/2;
+        posOriginalY = HEIGHT/2;
         setSize(1024, 640);  //se redimenciona el applet
         setBackground(Color.white);  //fondo blanco del applet
         addKeyListener(this);  //se añade el keyListener al applet
@@ -124,20 +124,20 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
 //        fondoM = new SoundClip("sounds/jungle.wav");  //sonido de explosion
         
         //Se crea un nuevo objeto bueno y se añaden los cuadros de animación
-        barra = new Bueno(getWidth() / 2, getHeight()-300 , barra0);
-        barra.sumaCuadro(barra0, 75);
+        barra = new Bueno(getWidth(), getHeight()-300 , barra0);
+        barra.sumaCuadro(barra0, 1000);
       
         // del objeto malo se crea la pika y se anima.
         pika = new Malo(posOriginalX, posOriginalY, pika0, velX, velY);
         
-        pika.sumaCuadro(pika0, 100);
-        pika.sumaCuadro(pika1, 100);
-        pika.sumaCuadro(pika2, 100);
-        pika.sumaCuadro(pika3, 100);
-        pika.sumaCuadro(pika4, 100);
-        pika.sumaCuadro(pika5, 100);
-        pika.sumaCuadro(pika6, 100);
-        pika.sumaCuadro(pika7, 100);         
+        pika.sumaCuadro(pika0, 20);
+        pika.sumaCuadro(pika1, 20);
+        pika.sumaCuadro(pika2, 20);
+        pika.sumaCuadro(pika3, 20);
+        pika.sumaCuadro(pika4, 20);
+        pika.sumaCuadro(pika5, 20);
+        pika.sumaCuadro(pika6, 20);
+        pika.sumaCuadro(pika7, 20);         
         }
         
          public void start() {
@@ -226,16 +226,11 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
              click=false;
          } else{
          }
+         
+         
          pika.setPosY(pika.getPosY() - pika.getVelY());
          pika.setVelY(pika.getVelY() - gravity);
-         
-         if (direccion == 1) { // velocidad de las barras entre menos vidas menor el movimiento
-             barra.setPosX(barra.getPosX() - vidas - 2);
-         }
-         
-         else if (direccion == 2) {
-             barra.setPosX(barra.getPosX() + vidas + 2);
-         }
+         barra.setPosX(barra.getPosX() - 2);       
     }
     
     /**
@@ -248,10 +243,6 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             barra.setPosX(getWidth() - barra.getAncho());
         }
         
-        //Verifica que barra no choque con el applet por la izquierda
-        if (barra.getPosX() < getWidth() / 2) {
-            barra.setPosX(getWidth() / 2);
-        }
         
         //Verifica que cada objeto malo no choque con el caballo
         if (barra.intersecta(pika)) {
