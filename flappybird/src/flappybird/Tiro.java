@@ -251,7 +251,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
             pokebar[1].setPosX(getWidth() );
             random = (int) (Math.random() * 200 + 50);
             pokebar[0].setPosY(getHeight() - random);
-            pokebar[1].setPosY(0 - random + 100);            
+            pokebar[1].setPosY(0 - random);            
         }
         
         
