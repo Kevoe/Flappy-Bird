@@ -85,6 +85,7 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
         public void init() {
         direccion = 0; //inicia estático
         click = false; //inicia sin click
+        score=0;
         pausa = false;  //se inicia sin pausa
         vidas = 5; // cantidad inicial de vidas
         puntaje = 0; // socre inicial
@@ -234,8 +235,13 @@ public class Tiro extends JFrame implements Runnable, KeyListener, MouseListener
          } else{
          }
          
-         if(!pokebar.haIncrementadoScore() && pokebar.getPosX() + pokebar.getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
-                    pokebar.incrementarScore();
+         if(!pokebar[0].haIncrementadoScore() && pokebar[0].getPosX() + pokebar[0].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
+                    pokebar[0].incrementarScore();
+                    score++;
+         }
+         
+         if(!pokebar[1].haIncrementadoScore() && pokebar[1].getPosX() + pokebar[1].getAncho()/2 <= pika.getPosX() + pika.getAncho()/2) {
+                    pokebar[1].incrementarScore();
                     score++;
          }
          pika.setPosY(pika.getPosY() - pika.getVelY());
